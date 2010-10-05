@@ -68,9 +68,13 @@ Start the Lacuna Client. Requires artwork and the API from
 
 http://www.lacunaexpanse.com/developers/
 
+Get the artwork from http://github.com/plainblack/Lacuna-Assets 
+
+Put Lacuna-Assets folder in same folder as this code.
+
 =head1 USAGE
 
-perl lacuna-cli.pl
+perl -Ilib lacuna-cli.pl [/path/to/Lacuna-Assets]
 
 =head1 BUGS
 
