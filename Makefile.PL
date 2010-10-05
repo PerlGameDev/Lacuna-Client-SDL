@@ -10,5 +10,6 @@ WriteMakefile(
     ABSTRACT     => 'Native Desktop Client for the Lacuna Expanse Game',
     PREREQ_PM    => {
                      'Test::Simple' => 0.44,
+                     'SDL'          => 2.518,
                     },
 );

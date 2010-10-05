@@ -1,6 +1,52 @@
 package Games::Lacuna::Client;
 use strict;
 use warnings;
+use SDL 2.518;
+use SDL::Video;
+use SDL::Event;
+use SDLx::App;
+
+sub new
+{
+   my $class = shift;
+   my $self = {assets => 'Lacuna-Assets'};
+      $self->{assets} = $_[0] if $_[0] && -d $_[0];
+   
+    $self = bless $self, $class;
+
+   return $self;
+
+}
+
+sub run 
+{
+  my $self = shift;
+
+  my $app = SDLx::App->new( width => 600, height => 480, depth => 32, flags => SDL_DOUBLEBUF | SDL_HWSURFACE );
+
+  $app->add_event_handler( \&_quit_handler  );
+
+  #Should make an asset loader to use here.
+
+  $self->{logo} = SDLx::Surface->load( $self->{assets}.'/ui/logo.png' );
+ 
+  $self->{logo}->blit( $app, [0,0,$self->{logo}->w, $self->{logo}->h] );
+
+  $app->update();
+
+  $self->{app} = $app;
+
+  $self->{app}->run();
+
+}
+
+sub _quit_handler
+{
+   my ($event, $control) = @_;
+
+    $control->stop if $event->type == SDL_QUIT;
+
+}
 
 #################### main pod documentation begin ###################
 ## Below is the stub of documentation for your module. 
