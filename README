@@ -1,7 +1,5 @@
 
-This will be a fat client for the lucana game. See http://www.lacunaexpanse.com/developers/
+This will be a fat client for the lacuna game. See http://www.lacunaexpanse.com/developers/
 
-The module name will be: Games::Lucana::Client::SDL
+The module name will be: Games::Lacuna::Client::SDL
 
-
-42;
