@@ -22,7 +22,7 @@ sub run
 {
   my $self = shift;
 
-  my $app = SDLx::App->new( width => 600, height => 480, depth => 32, flags => SDL_DOUBLEBUF | SDL_HWSURFACE );
+  my $app = SDLx::App->new( title => "The Lacuna Expanse", width => 600, height => 480, depth => 32, flags => SDL_DOUBLEBUF | SDL_HWSURFACE );
 
   $app->add_event_handler( \&_quit_handler  );
 
