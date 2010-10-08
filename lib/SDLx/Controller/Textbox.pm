@@ -7,12 +7,15 @@ use SDLx::App;
 use SDLx::Controller::Interface;
 use Data::Dumper;
 use SDL::Event;
+use SDL::Events;
+use SDL::TTF;
 
 sub new {
-    my $class = shift;
-    my %params = @_;
-    my $self = \%params;
-       $self = bless $self, $class;
+    my $class         = shift;
+    my %params        = @_;
+    my $self          = \%params;
+       $self->{value} = '';
+       $self          = bless $self, $class;
     return $self;
 }
 
@@ -26,7 +29,8 @@ $textbox->set_acceleration (
   );
 my $textbox_render = sub {
     my ($state, $self) = @_;
-    $self->{app}->draw_rect( [$self->{x}, $self->{y}, $self->{w}, $self->{h}], [$state->x&1 ? 255 : 0,255,255,255] );
+    $self->{app}->draw_rect( [$self->{x}, $self->{y}, $self->{w}, $self->{h}], [255,255,255,255] );
+    $self->{app}->draw_gfx_text( [$self->{x} + 3, $self->{y} + 7], 0x000000FF, $self->{value} );
     $self->{app}->update;
 };
 
@@ -37,7 +41,7 @@ sub show {
 
 my $focus = 0;
 sub event_handler {
-    my ($self, $event, $control) = @_;
+    my ($self, $event, $app) = @_;
     
     if(SDL_MOUSEMOTION == $event->type) {
         if($self->{x} <= $event->motion_x && $event->motion_x < $self->{x} + $self->{w}
@@ -70,6 +74,11 @@ sub event_handler {
     elsif(SDL_KEYDOWN == $event->type) {
         if($focus) {
             warn "on_keydown";
+            my $key = SDL::Events::get_key_name( $event->key_sym );
+            if($key =~ /^.$/) {
+                $key = uc($key) if $event->key_mod & KMOD_SHIFT;
+                $self->{value} .= $key;
+            }
         }
     }
     elsif(SDL_KEYUP == $event->type) {
