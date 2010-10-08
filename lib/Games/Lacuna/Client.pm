@@ -4,48 +4,57 @@ use warnings;
 use SDL 2.518;
 use SDL::Video;
 use SDL::Event;
+use SDL::Events;
 use SDLx::App;
 
-sub new
-{
-   my $class = shift;
-   my $self = {assets => 'Lacuna-Assets'};
-      $self->{assets} = $_[0] if $_[0] && -d $_[0];
-   
-    $self = bless $self, $class;
+use lib 'D:/dev/Lacuna-Client-SDL/lib';
+use SDLx::Controller::Textbox;
 
-   return $self;
+sub new {
+    my $class = shift;
+    my $self = {assets => 'Lacuna-Assets'};
+       $self->{assets} = $_[0] if $_[0] && -d $_[0];
+       $self = bless $self, $class;
 
+    return $self;
 }
 
-sub run 
-{
-  my $self = shift;
+sub run {
+    my $self = shift;
 
-  my $app = SDLx::App->new( title => "The Lacuna Expanse", width => 600, height => 480, depth => 32, flags => SDL_DOUBLEBUF | SDL_HWSURFACE );
+    my $app = SDLx::App->new( title => "The Lacuna Expanse", width => 600, height => 480, depth => 32, flags => SDL_DOUBLEBUF | SDL_HWSURFACE );
 
-  $app->add_event_handler( \&_quit_handler  );
+    $app->add_event_handler( \&_quit_handler );
+    $app->add_event_handler( \&_menu_handler );
 
-  #Should make an asset loader to use here.
+    #Should make an asset loader to use here.
 
-  $self->{logo} = SDLx::Surface->load( $self->{assets}.'/ui/logo.png' );
- 
-  $self->{logo}->blit( $app, [0,0,$self->{logo}->w, $self->{logo}->h] );
+    $self->{logo} = SDLx::Surface->load( $self->{assets}.'/ui/logo.png' );
 
-  $app->update();
+    $self->{logo}->blit( $app, [0,0,$self->{logo}->w, $self->{logo}->h] );
 
-  $self->{app} = $app;
+    $app->update();
 
-  $self->{app}->run();
+    $self->{app} = $app;
 
+    $self->{app}->run();
 }
 
-sub _quit_handler
-{
-   my ($event, $control) = @_;
+sub _quit_handler {
+    my ($event, $control) = @_;
 
     $control->stop if $event->type == SDL_QUIT;
+}
 
+my $textbox;
+sub _menu_handler {
+    my ($event, $app) = @_;
+
+    if(!defined $textbox) {
+        $textbox = SDLx::Controller::Textbox->new(app => $app, x => 200, y => 200, w => 200, h => 20);
+        $textbox->show;
+        $app->add_event_handler( sub{$textbox->event_handler(@_)} );
+    }
 }
 
 #################### main pod documentation begin ###################
