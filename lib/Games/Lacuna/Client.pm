@@ -46,12 +46,15 @@ sub _quit_handler {
 }
 
 my $textbox;
+my $passbox;
 sub _menu_handler {
     my ($event, $app) = @_;
 
     if(!defined $textbox) {
-        $textbox = SDLx::Widget::Textbox->new(app => $app, x => 200, y => 200, w => 200, h => 20);
+        $textbox = SDLx::Widget::Textbox->new(app => $app, x => 200, y => 200, w => 200, h => 20, name => 'username');
+        $passbox = SDLx::Widget::Textbox->new(app => $app, x => 200, y => 230, w => 200, h => 20, name => 'password', password => 1);
         $textbox->show;
+        $passbox->show;
     }
 }
 
