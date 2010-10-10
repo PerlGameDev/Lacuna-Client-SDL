@@ -11,5 +11,6 @@ WriteMakefile(
     PREREQ_PM    => {
                      'Test::Simple' => 0.44,
                      'SDL'          => 2.518,
+		     'JSON::RPC2::Client' => 0,
                     },
 );
