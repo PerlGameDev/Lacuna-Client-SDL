@@ -7,8 +7,7 @@ use SDL::Event;
 use SDL::Events;
 use SDLx::App;
 
-use lib 'D:/dev/Lacuna-Client-SDL/lib';
-use SDLx::Controller::Textbox;
+use SDLx::Widget::Textbox;
 
 sub new {
     my $class = shift;
@@ -51,9 +50,8 @@ sub _menu_handler {
     my ($event, $app) = @_;
 
     if(!defined $textbox) {
-        $textbox = SDLx::Controller::Textbox->new(app => $app, x => 200, y => 200, w => 200, h => 20);
+        $textbox = SDLx::Widget::Textbox->new(app => $app, x => 200, y => 200, w => 200, h => 20);
         $textbox->show;
-        $app->add_event_handler( sub{$textbox->event_handler(@_)} );
     }
 }
 
